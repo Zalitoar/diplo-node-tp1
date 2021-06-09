@@ -24,11 +24,6 @@ CREATE DATABASE IF NOT EXISTS `listascompras` DEFAULT CHARACTER SET utf8mb4 COLL
 USE `listascompras`;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categorias`
---
-
 CREATE TABLE `categorias` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) CHARACTER SET latin1 NOT NULL
@@ -152,11 +147,7 @@ ALTER TABLE `producto`
 CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 USE `phpmyadmin`;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pma__bookmark`
---
+-- -----------------------------------------------------
 
 CREATE TABLE `pma__bookmark` (
   `id` int(10) UNSIGNED NOT NULL,

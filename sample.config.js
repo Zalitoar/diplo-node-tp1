@@ -29,4 +29,5 @@ var config = {
         }
     }
 };
-module.exports = config;
+var env = process.env.NODE_ENV || 'production';
+module.exports = config[env];

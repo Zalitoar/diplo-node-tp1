@@ -14,4 +14,24 @@ router.get('/libro/:libro', (req, res) => {
     res.json({"un": "libro"});
 });
 
+router.post('/libro', (req, res) => {
+    res.json({ "una": "libro" });
+});
+
+router.put('/libro/:id', (req, res) => {
+    res.json({ "una": "libro" });
+});
+
+router.put('/libro/prestar/:id', (req, res) => {
+    res.json({ "una": "libro" });
+});
+
+router.put('/libro/devolver/:id', (req, res) => {
+    res.json({ "una": "libro" });
+});
+
+router.delete('/libro/:id', (req, res) => {
+    res.json({ "una": "libro" });
+});
+
 module.exports = router;

@@ -1,5 +1,5 @@
 function personValidation(email, db){
-    db.query("select * from personas where email= ?",[email], (error, registros, campos)=>{
+    db.query("select * from persona where email= ?",[email], (error, registros, campos)=>{
         if (error){
             throw new Error("error en la consulta");
         }

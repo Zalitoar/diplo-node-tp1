@@ -29,6 +29,47 @@ async function validatePersonExist(id){
     return person[0];
 }
 
+
+//---------------------------------------------------------------------
+async function bookValidation(nombre, descripcion, categoria){
+    if(!nombre || !categoria){
+        throw new Error("faltan datos");
+        }
+}
+
+async function validateBookFound(id){
+    const book = await query("SELECT * FROM libro WHERE id=?",[id]);
+    if (!book.length){
+        throw new Error("no se encuentra ese libro")
+    }
+    return book[0];
+}
+
+async function validateBookExist(id){
+    const book = await query("SELECT * FROM libro WHERE id=?",[id]);
+    if (book.length){
+        throw new Error("Ya existe ese libro")
+    }
+    return book[0];
+}
+
+async function validateBookLend(id){
+    const book = await query("SELECT * FROM libro WHERE persona_id is NULL AND id=?",[id]);
+    if (book.length){
+        throw new Error("ese libro no esta prestado")
+    }
+    return book[0];
+}
+
+async function validateBookLendDelete(id){
+    const book = await query("SELECT * FROM libro WHERE persona_id is NOT NULL AND id=?",[id]);
+    if (book.length){
+        throw new Error("libro prestado, no se puede puede borrar")
+    }
+    return book[0];
+}
+
+
 //PERSONA: 
 //-faltan datos -> ya está HECHO
 //-error inesperado -> HECHO (contemplado en el catch)
@@ -47,19 +88,23 @@ async function validatePersonExist(id){
 
 //LIBRO
 //-error inesperado
-//-libro ya existente
-//-nombre y categoria datos obligatorios
+//-libro ya existente -> HECHO
+//-nombre y categoria datos obligatorios -> HECHO.
 //-no existe la categoria indicada
 //-no existe la persona indicada
 //-no se encuentra ese libro
 //-solo se puede modificar la descripcion del libro
-//-ese libro no estaba prestado
-//-no existe ese libro
-//-ese libro esta prestado no se puede borrar
+//-ese libro no estaba prestado -> HECHO.
+//-no existe ese libro -> HECHO.
+//-ese libro esta prestado no se puede borrar -> HECHO.
 
 
 module.exports = {
     personValidation,
     validatePersonExist,
-    validatePersonFound
+    validatePersonFound,
+    bookValidation,
+    validateBookFound,
+    validateBookLend,
+    validateBookLendDelete    
 };

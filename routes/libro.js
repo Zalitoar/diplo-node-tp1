@@ -10,6 +10,44 @@ router.get('/libro', (req, res) => {
     });
 });
 
+router.get('/libro/:id',async (req, res) => {
+    try{
+        const book = await validateBookFound(req.params.id);
+        res.json(book);
+    }
+    catch (e){
+        res.status(413).json(e.message);
+    }
+});
+
+router.get('/libro/:id',async (req, res) => {
+    try{
+        const book = await validateBookLend(req.params.id);
+        res.json(book);
+    }
+    catch (e){
+        res.status(413).json(e.message);
+    }
+});
+
+router.delete('/libro/:id', async(req, res) => {
+    try{
+        await validateBookFound(req.params.id); // verfica que exista el libro
+        await validateBookLendDelete(req.params.id); //verifica que no se encuentre prestado
+        
+        db.query("DELETE FROM libro WHERE id=?", [req.params.id], (error, registro, campos)=>{
+         if (error){
+            throw new Error(error.message);
+            }
+            res.json({ "message": "se borro correctamente el libro" });
+        });
+    }
+    catch (e) {
+        res.status(413).json(e.message);
+    }
+});
+
+
 router.get('/libro/:libro', (req, res) => {
     res.json({"un": "libro"});
 });

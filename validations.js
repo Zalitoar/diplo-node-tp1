@@ -8,7 +8,7 @@ async function personValidation(email, apellido, nombre, alias){
     }
     
     const persons = await query("SELECT * FROM persona WHERE email= ?",[email]);
-    if (persons) {
+    if (persons.length) {
         throw new Error('email ya registrado')
     }
 }

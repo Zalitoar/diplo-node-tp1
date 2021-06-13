@@ -25,7 +25,7 @@ router.get('/persona/:id', (req, res) => {
 router.post("/persona", (req, res) => {
     try {
         personValidation(req.body.email, db);
-        db.query("insert into persona (nombre,apellido,alias,email) values (?,?,?,?)", [req.body.nombre, req.body.apellido, req.body.alias, req.body.email], (error, registro, campos) => {
+        db.query("INSERT INTO persona (nombre,apellido,alias,email) values (?,?,?,?)", [req.body.nombre, req.body.apellido, req.body.alias, req.body.email], (error, registro, campos) => {
             if (error) {
                 throw new Error("error al ingresar en la base de datos");
             }

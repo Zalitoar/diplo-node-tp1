@@ -3,7 +3,6 @@
 var router = require('express').Router();
 const express = require('express');
 const personValidation = require("../validations");
-
 const db = require('../database');
 
 router.use(express.json());
@@ -22,9 +21,9 @@ router.get('/persona/:id', (req, res) => {
     });
 }); //validaciones del get
 
-router.post("/persona", (req, res) => {
+router.post("/persona", async (req, res) => {
     try {
-        personValidation(req.body.email, db);
+        await personValidation(req.body.email, req.body.apellido, req.body.nombre, req.body.alias,  db);
         db.query("INSERT INTO persona (nombre,apellido,alias,email) values (?,?,?,?)", [req.body.nombre, req.body.apellido, req.body.alias, req.body.email], (error, registro, campos) => {
             if (error) {
                 throw new Error("error al ingresar en la base de datos");
@@ -32,11 +31,10 @@ router.post("/persona", (req, res) => {
             return registro;
         });
         res.status(201).json();
-        res.status(201).send("Exito: registro realizado");
     }
     catch (e) {
         console.log(e);
-        res.json(e.message);
+        res.status(413).json(e.message);
     }
 });
 //hacer validacion de "faltan datos" en persona

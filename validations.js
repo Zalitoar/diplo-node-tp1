@@ -1,16 +1,32 @@
-function personValidation(email, db){
-    db.query("select * from persona where email= ?",[email], (error, registros, campos)=>{
-        if (error){
-            throw new Error("error en la consulta");
-        }
-        if (registros[0]){
-            throw new Error("email ya registrado");
-        }
+const e = require("express");
+
+function personValidation(email, apellido, nombre, alias, db){
+    db.on("error", (e)=>{
+        throw e;
     });
+    
+    if(!email || !apellido || !nombre || !alias){
+        throw new Error("faltan datos");
+    }
+    try{
+        db.query("SELECT * FROM persona WHERE email= ?",[email], (error, registros, campos)=>{
+            if (error){
+                throw new Error("error en la base de datos");
+            }
+            console.log(registros);
+            if(registros){
+                throw new Error("email ya registrado");
+            }
+        });
+    }
+    catch(e){
+        console.log(e);
+        throw e;
+    }
 }
 
 //PERSONA: 
-//-faltan datos 
+//-faltan datos -> ya está HECHO
 //-error inesperado 
 //-no se encuentra esa persona 
 //-no existe esa persona 

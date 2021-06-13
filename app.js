@@ -2,13 +2,16 @@
 
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(require('./routes/index'));
 app.use(require('./routes/persona'));
 app.use(require('./routes/categoria'));
 app.use(require('./routes/libro'));
 
-var config = require('./config');
+var config = require('./sample.config');
 const port = config.server.port;
 
 app.use(express.json());

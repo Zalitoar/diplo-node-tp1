@@ -1,7 +1,7 @@
 var config = {
     development: {
         //mysql connection settings
-        database: {
+        db: {
             host: '127.0.0.1',
             port: '3306',
             name: 'dev_db',
@@ -15,12 +15,12 @@ var config = {
         }
     },
     production: {
-        database: {
-            host: '127.0.0.1',
+        db: {
+            host: 'localhost',
             port: '3306',
             name: 'mydb',
             user: 'root',
-            pwd: '***'
+            pwd: ''
         },
         //server details
         server: {

@@ -8,7 +8,7 @@ app.use(require('./routes/persona'));
 app.use(require('./routes/categoria'));
 app.use(require('./routes/libro'));
 
-var config = require('./config');
+var config = require('./sample.config');
 const port = config.server.port;
 
 app.use(express.json());

@@ -1,19 +1,40 @@
-function personValidation(email, db){
-    db.query("select * from persona where email= ?",[email], (error, registros, campos)=>{
-        if (error){
-            throw new Error("error en la consulta");
-        }
-        if (registros[0]){
-            throw new Error("email ya registrado");
-        }
-    });
+const db = require('./database');
+const util = require('util');
+const query = util.promisify(db.query).bind(db);
+
+async function personValidation(email, apellido, nombre, alias){
+    if(!email || !apellido || !nombre || !alias){
+        throw new Error("faltan datos");
+    }
+    
+    const persons = await query("SELECT * FROM persona WHERE email= ?",[email]);
+    if (persons.length) {
+        throw new Error('email ya registrado')
+    }
+}
+
+async function validatePersonFound(id){
+    const person = await query("SELECT * FROM persona WHERE id=?",[id]);
+    if (!person.length){
+        throw new Error("no se encuentra esa persona")
+    }
+    return person[0];
+}
+
+async function validatePersonExist(id){
+    const person =await query("SELECT * FROM persona WHERE id=?",[id]);
+    if (!person.length){
+        throw new Error("no existe esa persona")
+    }
+    return person[0];
 }
 
 //PERSONA: 
-//-faltan datos 
-//-error inesperado 
-//-no se encuentra esa persona 
-//-no existe esa persona 
+//-faltan datos -> ya está HECHO
+//-error inesperado -> HECHO (contemplado en el catch)
+//-email registrado -> HECHO
+//-no se encuentra esa persona ->HECHO
+//-no existe esa persona -> HECHO
 //-esa persona tiene libros asociados, no se puede eliminar
 
 //CATEGORIA
@@ -37,4 +58,8 @@ function personValidation(email, db){
 //-ese libro esta prestado no se puede borrar
 
 
-module.exports = personValidation;
+module.exports = {
+    personValidation,
+    validatePersonExist,
+    validatePersonFound
+};

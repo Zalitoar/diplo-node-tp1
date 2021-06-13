@@ -1,7 +1,6 @@
 'use strict';
 
 var config = require('./sample.config');
-const util = require("util");
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
@@ -11,8 +10,6 @@ const db = mysql.createConnection({
     database: config.db.name,
     insecureAuth: true
 });
-
-util.promisify(db.query).bind(db);
 
 db.connect((err) => {
     if (err) throw err;

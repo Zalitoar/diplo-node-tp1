@@ -1,27 +1,15 @@
-const e = require("express");
+const db = require('./database');
+const util = require('util');
+const query = util.promisify(db.query).bind(db);
 
-function personValidation(email, apellido, nombre, alias, db){
-    db.on("error", (e)=>{
-        throw e;
-    });
-    
+async function personValidation(email, apellido, nombre, alias){
     if(!email || !apellido || !nombre || !alias){
         throw new Error("faltan datos");
     }
-    try{
-        db.query("SELECT * FROM persona WHERE email= ?",[email], (error, registros, campos)=>{
-            if (error){
-                throw new Error("error en la base de datos");
-            }
-            console.log(registros);
-            if(registros){
-                throw new Error("email ya registrado");
-            }
-        });
-    }
-    catch(e){
-        console.log(e);
-        throw e;
+    
+    const persons = await query("SELECT * FROM persona WHERE email= ?",[email]);
+    if (persons) {
+        throw new Error('email ya registrado')
     }
 }
 

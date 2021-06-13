@@ -23,17 +23,18 @@ router.get('/persona/:id', (req, res) => {
 
 router.post("/persona", async (req, res) => {
     try {
-        await personValidation(req.body.email, req.body.apellido, req.body.nombre, req.body.alias,  db);
+        await personValidation(req.body.email, req.body.apellido, req.body.nombre, req.body.alias);
+
         db.query("INSERT INTO persona (nombre,apellido,alias,email) values (?,?,?,?)", [req.body.nombre, req.body.apellido, req.body.alias, req.body.email], (error, registro, campos) => {
             if (error) {
                 throw new Error("error al ingresar en la base de datos");
             }
-            return registro;
+            if(registro){
+                res.status(200).json('persona registrada');
+            }
         });
-        res.status(201).json();
     }
     catch (e) {
-        console.log(e);
         res.status(413).json(e.message);
     }
 });

@@ -13,11 +13,28 @@ async function personValidation(email, apellido, nombre, alias){
     }
 }
 
+async function validatePersonFound(id){
+    const person = await query("SELECT * FROM persona WHERE id=?",[id]);
+    if (!person.length){
+        throw new Error("no se encuentra esa persona")
+    }
+    return person[0];
+}
+
+async function validatePersonExist(id){
+    const person =await query("SELECT * FROM persona WHERE id=?",[id]);
+    if (!person.length){
+        throw new Error("no existe esa persona")
+    }
+    return person[0];
+}
+
 //PERSONA: 
 //-faltan datos -> ya está HECHO
-//-error inesperado 
-//-no se encuentra esa persona 
-//-no existe esa persona 
+//-error inesperado -> HECHO (contemplado en el catch)
+//-email registrado -> HECHO
+//-no se encuentra esa persona ->HECHO
+//-no existe esa persona -> HECHO
 //-esa persona tiene libros asociados, no se puede eliminar
 
 //CATEGORIA
@@ -41,4 +58,8 @@ async function personValidation(email, apellido, nombre, alias){
 //-ese libro esta prestado no se puede borrar
 
 
-module.exports = personValidation;
+module.exports = {
+    personValidation,
+    validatePersonExist,
+    validatePersonFound
+};

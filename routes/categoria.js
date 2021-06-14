@@ -30,7 +30,7 @@ router.post('/categoria', async (req, res) => {
 
         db.query("INSERT INTO categoria (nombre) values (?)", [req.body.nombre], (error, registro) => {
             if (error) {
-                throw new Error("error al ingresar en la base de datos");
+                throw error;
             }
             if (registro) {
                 res.status(200)
@@ -46,9 +46,9 @@ router.delete('/categoria/:id', async (req, res) => {
     try {
         await validateCategoryDelete(req.params.id);
 
-        db.query("delete from categoria where id = ?", [req.params.id], (error, registro, campos) => {
+        db.query("DELETE from categoria where id=?", [req.params.id], (error, registro, campos) => {
             if (error) {
-                throw new Error(error.message);
+                throw error;
             }
             res.json({ "message": "se borró correctamente" })
         });

@@ -81,12 +81,12 @@ async function validateBookLendDelete(id) {
 async function categoryValidation(nombre) {
     if (!nombre) {
         throw new Error("faltan datos")
-    } else {
-        const category = await query("SELECT * FROM categoria WHERE nombre=?", [nombre]);
-        if (category.length) {
-            throw new Error("ese nombre de categoria ya existe")
-        } return category[0];
     }
+    const category = await query("SELECT * FROM categoria WHERE nombre=?", [nombre]);
+    if (category.length) {
+        throw new Error("ese nombre de categoria ya existe")
+    }
+    return category[0];
 };
 
 async function validateCategoryFound(id) {
@@ -106,7 +106,7 @@ async function validateCategoryExist(id) {
 }
 
 async function validateCategoryDelete(id) {
-    const category = await query("SELECT * FROM categoria WHERE categoria_id is NOT NULL AND id=?", [id]);
+    const category = await query("SELECT * FROM libro WHERE categoria_id=?", [id]);
     if (category.length) {
         throw new Error("categoria con libros asociados, no se puede eliminar")
     }
@@ -124,11 +124,11 @@ async function validateCategoryDelete(id) {
 
 //CATEGORIA
 //-faltan datos => HECHO
-//-categoria ya existente  -> HECHO
-//-error inesperado
-//-categoria no encontrada 
-//-no existe la categoria 
-//-categoria con libros asociados, no se puede eliminar 
+//-categoria ya existente  -> HECHO 
+//-error inesperado -> hecho
+//-categoria no encontrada -> hecho
+//-no existe la categoria -> hecho
+//-categoria con libros asociados, no se puede eliminar -> hecho
 
 //LIBRO
 //-error inesperado

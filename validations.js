@@ -81,11 +81,11 @@ async function validateBookLendDelete(id) {
 async function categoryValidation(nombre) {
     if (!nombre) {
         throw new Error("faltan datos")
-    };
-
-    const category = await query("SELECT * FROM categoria WHERE cateogria=?", [categoria]);
-    if (category.length) {
-        throw new Error("ese nombre de categoria ya existe")
+    } else {
+        const category = await query("SELECT * FROM categoria WHERE nombre=?", [nombre]);
+        if (category.length) {
+            throw new Error("ese nombre de categoria ya existe")
+        } return category[0];
     }
 };
 
@@ -124,7 +124,7 @@ async function validateCategoryDelete(id) {
 
 //CATEGORIA
 //-faltan datos => HECHO
-//-categoria ya existente 
+//-categoria ya existente  -> HECHO
 //-error inesperado
 //-categoria no encontrada 
 //-no existe la categoria 

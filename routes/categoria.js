@@ -2,7 +2,7 @@
 
 var router = require('express').Router();
 const express = require('express');
-const { categoryValidation, validateCategoryFound, validateCategoryExist, validateCategoryDelete } = require("../validations");
+const { categoryValidation, validateCategoryFound, validateCategoryExist, validateCategoryHasBook } = require("../validations");
 const db = require('../database');
 
 router.use(express.json());

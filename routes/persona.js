@@ -33,7 +33,7 @@ router.post("/persona", async (req, res) => {
                 throw new Error("error al ingresar en la base de datos");
             }
             if(registro){
-                res.status(200).json('persona registrada');
+                res.status(200).json("persona registrada");
             }
         });
     }

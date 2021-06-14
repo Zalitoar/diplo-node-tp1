@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('./sample.config');
+var config = require('./config');
 const mysql = require('mysql');
 
 const db = mysql.createConnection({

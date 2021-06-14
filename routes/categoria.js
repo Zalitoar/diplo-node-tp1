@@ -45,7 +45,7 @@ router.post('/categoria', async (req, res) => {
 router.delete('/categoria/:id', async (req, res) => {
     try {
         await validateCategoryExist(req.params.id);
-        await validateCategoryDelete(req.params.id);
+        await validateCategoryHasBook(req.params.id);
         db.query("DELETE from categoria where id=?", [req.params.id], (error, registro, campos) => {
             if (error) {
                 throw error;

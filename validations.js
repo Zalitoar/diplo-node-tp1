@@ -105,7 +105,7 @@ async function validateCategoryExist(id) {
     return category[0];
 }
 
-async function validateCategoryDelete(id) {
+async function validateCategoryHasBook(id) {
     const category = await query("SELECT * FROM libro WHERE categoria_id=?", [id]);
     if (category.length) {
         throw new Error("categoria con libros asociados, no se puede eliminar")
@@ -156,5 +156,5 @@ module.exports = {
     categoryValidation,
     validateCategoryFound,
     validateCategoryExist,
-    validateCategoryDelete
+    validateCategoryHasBook
 };

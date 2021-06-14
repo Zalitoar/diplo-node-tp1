@@ -29,6 +29,13 @@ async function validatePersonExist(id){
     return person[0];
 }
 
+async function validatePersonHasBook(id) {
+    const person = await query("SELECT * FROM libro WHERE persona_id=?)", [id]);
+    if (person.length) {
+      throw new Error("Esa persona tiene libros asociados, no se puede eliminar");
+    }
+    return person[0];
+}
 
 //---------------------------------------------------------------------
 async function bookValidation(nombre, descripcion, categoria){
@@ -103,6 +110,7 @@ module.exports = {
     personValidation,
     validatePersonExist,
     validatePersonFound,
+    validatePersonHasBook,
     bookValidation,
     validateBookFound,
     validateBookLend,

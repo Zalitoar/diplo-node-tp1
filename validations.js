@@ -31,7 +31,7 @@ async function validatePersonExist(id) {
 }
 
 async function validatePersonHasBook(id) {
-    const person = await query("SELECT * FROM libro WHERE persona_id=?)", [id]);
+    const person = await query("SELECT * FROM libro WHERE persona_id=?", [id]);
     if (person.length) {
         throw new Error("Esa persona tiene libros asociados, no se puede eliminar");
     }
@@ -84,33 +84,33 @@ async function categoryValidation(nombre) {
     };
 
     const category = await query("SELECT * FROM categoria WHERE cateogria=?", [categoria]);
-    if (categoria.length) {
+    if (category.length) {
         throw new Error("ese nombre de categoria ya existe")
     }
 };
 
 async function validateCategoryFound(id) {
     const category = await query("SELECT * FROM categoria WHERE id=?", [id]);
-    if (!categoria.length) {
+    if (!category.length) {
         throw new Error("categoría no encontrada")
     }
-    return categoria[0]
+    return category[0]
 };
 
 async function validateCategoryExist(id) {
     const category = await query("SELECT * FROM categoria WHERE id=?", [id]);
-    if (!categoria.length) {
+    if (!category.length) {
         throw new Error("no existe la categoria indicada")
     }
-    return categoria[0];
+    return category[0];
 }
 
 async function validateCategoryDelete(id) {
     const category = await query("SELECT * FROM categoria WHERE categoria_id is NOT NULL AND id=?", [id]);
-    if (categoria.length) {
+    if (category.length) {
         throw new Error("categoria con libros asociados, no se puede eliminar")
     }
-    return categoria[0];
+    return category[0];
 }
 
 
@@ -120,7 +120,7 @@ async function validateCategoryDelete(id) {
 //-email registrado -> HECHO
 //-no se encuentra esa persona ->HECHO
 //-no existe esa persona -> HECHO
-//-esa persona tiene libros asociados, no se puede eliminar
+//-esa persona tiene libros asociados, no se puede eliminar -> HECHO
 
 //CATEGORIA
 //-faltan datos => HECHO

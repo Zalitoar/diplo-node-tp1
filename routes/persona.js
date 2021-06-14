@@ -2,7 +2,7 @@
 
 var router = require('express').Router();
 const express = require('express');
-const {personValidation, validatePersonExist, validatePersonFound} = require("../validations");
+const { personValidation, validatePersonExist, validatePersonFound, validatePersonHasBook } = require("../validations");
 const db = require('../database');
 
 router.use(express.json());
@@ -14,12 +14,12 @@ router.get('/persona', (req, res) => {
     });
 });
 
-router.get('/persona/:id',async (req, res) => {
-    try{
+router.get('/persona/:id', async (req, res) => {
+    try {
         const person = await validatePersonFound(req.params.id);
         res.json(person);
     }
-    catch (e){
+    catch (e) {
         res.status(413).json(e.message);
     }
 });
@@ -32,7 +32,7 @@ router.post("/persona", async (req, res) => {
             if (error) {
                 throw new Error("error al ingresar en la base de datos");
             }
-            if(registro){
+            if (registro) {
                 res.status(200).json("persona registrada");
             }
         });
@@ -43,8 +43,8 @@ router.post("/persona", async (req, res) => {
 });
 
 
-router.put('/persona/:id',async (req, res) => {
-    try{
+router.put('/persona/:id', async (req, res) => {
+    try {
         await validatePersonFound(req.params.id);
         db.query("UPDATE persona SET nombre=?, apellido=?, alias=?, email=? WHERE id=?", [req.body.nombre, req.body.apellido, req.body.alias, req.body.email, req.params.id], async (error, registro, campos) => {
             if (error) {
@@ -55,16 +55,16 @@ router.put('/persona/:id',async (req, res) => {
         });
     }
     catch (e) {
-        res.status(413).json(e.message);  
+        res.status(413).json(e.message);
     }
 });
 
-router.delete('/persona/:id', async(req, res) => {
-    try{
+router.delete('/persona/:id', async (req, res) => {
+    try {
         await validatePersonHasBook(req.params.id);
-        db.query("DELETE FROM persona WHERE id=?", [req.params.id], (error, registro, campos)=>{
-         if (error){
-            throw new Error(error.message);
+        db.query("DELETE FROM persona WHERE id=?", [req.params.id], (error, registro, campos) => {
+            if (error) {
+                throw new Error(error.message);
             }
             res.json({ "message": "se borro correctamente" });
         });

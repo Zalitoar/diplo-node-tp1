@@ -1,5 +1,6 @@
 const db = require('./database');
 const util = require('util');
+const { error } = require('console');
 const query = util.promisify(db.query).bind(db);
 
 async function personValidation(email, apellido, nombre, alias){
@@ -9,7 +10,7 @@ async function personValidation(email, apellido, nombre, alias){
     
     const persons = await query("SELECT * FROM persona WHERE email= ?",[email]);
     if (persons.length) {
-        throw new Error('email ya registrado')
+        throw new Error("el email ya se encuentra registrado")
     }
 }
 
@@ -69,6 +70,41 @@ async function validateBookLendDelete(id){
     return book[0];
 }
 
+//---------------------------------------------------------------------
+async function categoryValidation (nombre){
+if (!nombre ) {
+    throw new Error("faltan datos")};
+
+    const category = await query("SELECT * FROM categoria WHERE cateogria=?",[categoria]);
+    if (categoria.length) {
+        throw new Error ("ese nombre de categoria ya existe")
+    }
+};
+
+async function validateCategoryFound (id){
+    const category = await query("SELECT * FROM categoria WHERE id=?", [id]);
+    if (!categoria.length) {
+    throw new Error("categoría no encontrada")
+}
+return categoria[0]
+};
+
+async function validateCategoryExist (id) {
+    const category= await query("SELECT * FROM categoria WHERE id=?", [id]); 
+    if (!categoria.length) {
+        throw new Error("no existe la categoria indicada")
+    }
+    return categoria[0];
+}
+
+async function validateCategoryDelete (id){
+const category= await query("SELEC * FROM categoria WHERE categoria_id is NOT NULL AND id=?", [id]);
+if (categoria.length) {
+    throw new Error("categoria con libros asociados, no se puede eliminar")
+}
+return categoria[0];
+}
+
 
 //PERSONA: 
 //-faltan datos -> ya está HECHO
@@ -79,12 +115,12 @@ async function validateBookLendDelete(id){
 //-esa persona tiene libros asociados, no se puede eliminar
 
 //CATEGORIA
-//-faltan datos
-//-categoria ya existente
+//-faltan datos => HECHO
+//-categoria ya existente 
 //-error inesperado
-//-categoria no encontrada
-//-no existe la categoria
-//-categoria con libros asociados, no se puede eliminar
+//-categoria no encontrada 
+//-no existe la categoria 
+//-categoria con libros asociados, no se puede eliminar 
 
 //LIBRO
 //-error inesperado
@@ -105,6 +141,11 @@ module.exports = {
     validatePersonFound,
     bookValidation,
     validateBookFound,
+    validateBookExist,
     validateBookLend,
-    validateBookLendDelete    
+    validateBookLendDelete,
+    categoryValidation,
+    validateCategoryFound,
+    validateCategoryExist,
+    validateCategoryDelete    
 };

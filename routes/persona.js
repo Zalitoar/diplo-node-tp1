@@ -61,7 +61,7 @@ router.put('/persona/:id',async (req, res) => {
 
 router.delete('/persona/:id', async(req, res) => {
     try{
-        await validatePersonExist(req.params.id);
+        await validatePersonHasBook(req.params.id);
         db.query("DELETE FROM persona WHERE id=?", [req.params.id], (error, registro, campos)=>{
          if (error){
             throw new Error(error.message);

@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
 app.use(cors());
-app.use(require('./routes/index'));
-app.use(require('./routes/persona'));
-app.use(require('./routes/categoria'));
-app.use(require('./routes/libro'));
+app.use(require("./routes/index"));
+app.use(require("./routes/persona"));
+app.use(require("./routes/categoria"));
+app.use(require("./routes/libro"));
 
-var config = require('./sample.config');
+var config = require("./sample.config");
 const port = config.server.port;
 
 app.use(express.json());

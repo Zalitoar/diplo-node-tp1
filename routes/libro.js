@@ -10,8 +10,6 @@ const {
   validateCategoryExist,
 } = require("../validations");
 const db = require("../database");
-const { validateBookLendDelete, validateBookFound } = require("../validations");
-
 router.get("/libro", (req, res) => {
   db.query("SELECT * FROM libro", (err, rows) => {
     // extraer a modelo

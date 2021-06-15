@@ -12,6 +12,7 @@ router.get('/libro', (req, res) => {
     });
 });
 
+// unificar estos dos GET
 router.get('/libro/:id', async(req, res) => {
     try {
         const book = await validateBookFound(req.params.id);
@@ -44,11 +45,6 @@ router.delete('/libro/:id', async(req, res) => {
     } catch (e) {
         res.status(413).json(e.message);
     }
-});
-
-
-router.get('/libro/:libro', (req, res) => {
-    res.json({ "un": "libro" });
 });
 
 router.post('/libro', async(req, res) => {

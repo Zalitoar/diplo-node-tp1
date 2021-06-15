@@ -81,7 +81,7 @@ router.post("/libro", async (req, res) => {
         req.body.nombre,
         req.body.descripcion,
         req.body.categoria_id,
-        req.body.categoria_id,
+        req.body.persona_id,
       ],
       (error, registro, campos) => {
         if (error) {

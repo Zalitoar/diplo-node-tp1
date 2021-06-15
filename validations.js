@@ -131,16 +131,16 @@ async function validateCategoryHasBook(id) {
 //-categoria con libros asociados, no se puede eliminar -> hecho
 
 //LIBRO
-//-error inesperado
+//-error inesperado -> HECHO (contemplado en el catch)
 //-libro ya existente -> HECHO
 //-nombre y categoria datos obligatorios -> HECHO.
-//-no existe la categoria indicada
-//-no existe la persona indicada
-//-no se encuentra ese libro
-//-solo se puede modificar la descripcion del libro
+//-no existe la categoria indicada -> HECHO
+//-no existe la persona indicada -> HECHO
+//-no se encuentra ese libro -> HECHO
 //-ese libro no estaba prestado -> HECHO.
 //-no existe ese libro -> HECHO.
 //-ese libro esta prestado no se puede borrar -> HECHO.
+//-solo se puede modificar la descripcion del libro // FALTA
 
 
 module.exports = {

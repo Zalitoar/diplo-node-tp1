@@ -11,6 +11,8 @@ const {
   validatePersonHasBook,
 } = require("../validations");
 const db = require("../database");
+
+
 router.get("/libro", (req, res) => {
   db.query("SELECT * FROM libro", (err, rows) => {
     // extraer a modelo
@@ -21,17 +23,9 @@ router.get("/libro", (req, res) => {
 
 // unificar estos dos GET
 router.get("/libro/:id", async (req, res) => {
+  console.log(req.params.id);
   try {
     const book = await validateBookFound(req.params.id);
-    res.json(book);
-  } catch (e) {
-    res.status(413).json(e.message);
-  }
-});
-
-router.get("/libro/:id", async (req, res) => {
-  try {
-    const book = await validateBookLend(req.params.id);
     res.json(book);
   } catch (e) {
     res.status(413).json(e.message);
@@ -124,7 +118,7 @@ router.put("/libro/:id", async (req, res) => {
 });
 
 router.put("/libro/prestar/:id", (req, res) => {
-  // AGREGAR VALIDACIONES: 
+  // AGREGAR VALIDACIONES:
   // el libro ya se encuentra prestado
   // no se puede prestar hasta que no se devuelva"
   // "no se encontro el libro"

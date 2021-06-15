@@ -148,7 +148,7 @@ async function validateCategoryHasBook(id) {
 //-no se encuentra ese libro -> HECHO
 //-ese libro no estaba prestado -> HECHO.
 //-no existe ese libro -> HECHO.
-//-ese libro esta prestado no se puede borrar -> HECHO.
+//-ese libro esta prestado no se puede borrar -> REVISAR
 //-solo se puede modificar la descripcion del libro // FALTA
 
 module.exports = {

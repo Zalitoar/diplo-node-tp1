@@ -32,26 +32,6 @@ router.get("/libro/:id", async (req, res) => {
   }
 });
 
-router.delete("/libro/:id", async (req, res) => {
-  try {
-    await validateBookFound(req.params.id); // verfica que exista el libro
-    await validateBookLendDelete(req.params.id); //verifica que no se encuentre prestado
-
-    db.query(
-      "DELETE FROM libro WHERE id=?",
-      [req.params.id],
-      (error, registro, campos) => {
-        if (error) {
-          throw error(error.message);
-        }
-        res.json({ message: "se borro correctamente el libro" });
-      }
-    );
-  } catch (e) {
-    res.status(413).json(e.message);
-  }
-});
-
 router.post("/libro", async (req, res) => {
   let id = req.body.id,
     nombre = req.body.nombre,
@@ -151,15 +131,19 @@ router.put("/libro/devolver/:id", (req, res) => {
 
 router.delete("/libro/:id", async (req, res) => {
   try {
-    await validateBookLendDelete(req.params.id);
-    db.query("DELETE FROM libro WHERE id =?"),
+    await validateBookFound(req.params.id); // verfica que exista el libro
+    await validateBookLendDelete(req.params.id); //verifica que no se encuentre prestado
+
+    db.query(
+      "DELETE FROM libro WHERE id=?",
       [req.params.id],
-      (error, registro) => {
+      (error, registro, campos) => {
         if (error) {
-          throw Error;
+          throw error(error.message);
         }
-        res.json({ message: "se borró correctamente" });
-      };
+        res.json({ message: "se borro correctamente el libro" });
+      }
+    );
   } catch (e) {
     res.status(413).json(e.message);
   }

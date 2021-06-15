@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-const router = require('express').Router();
+const router = require("express").Router();
 
-router.get('/', (req, res) => {
-    res.json({ "Title": "Index" });
+router.get("/", (req, res) => {
+  res.json({ Title: "Index" });
 });
 
-router.get('/about', (req, res) => {
-    res.json({ "Title": "About" });
+router.get("/about", (req, res) => {
+  res.json({ Title: "About" });
 });
 
 module.exports = router;

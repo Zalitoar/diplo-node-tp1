@@ -72,7 +72,7 @@ async function validateBookLend(id) {
 async function validateBookLendDelete(id) {
     const book = await query("SELECT * FROM libro WHERE persona_id is NOT NULL AND id=?", [id]);
     if (book.length) {
-        throw new Error("libro prestado, no se puede puede borrar")
+        throw new Error("ese libro esta prestado no se puede borrar")
     }
     return book[0];
 }

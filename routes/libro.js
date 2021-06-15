@@ -8,6 +8,7 @@ const {
   validateBookLendDelete,
   validatePersonExist,
   validateCategoryExist,
+  validatePersonHasBook,
 } = require("../validations");
 const db = require("../database");
 router.get("/libro", (req, res) => {
@@ -123,7 +124,31 @@ router.put("/libro/:id", async (req, res) => {
 });
 
 router.put("/libro/prestar/:id", (req, res) => {
-  res.json({ una: "libro" });
+  // AGREGAR VALIDACIONES: 
+  // el libro ya se encuentra prestado
+  // no se puede prestar hasta que no se devuelva"
+  // "no se encontro el libro"
+  // "no se encontro la persona a la que se quiere prestar el libro"
+
+  try {
+    db.query(
+      "UPDATE libro SET persona_id = ? WHERE id = ?",
+      [
+        req.body.persona_id,
+        req.params.id,
+      ],
+      (error, registro, campos) => {
+        if (error) {
+          throw error("error al ingresar en la base de datos");
+        }
+        if (registro) {
+          res.status(200).json("libro prestado");
+        }
+      }
+    );
+  } catch (e) {
+    res.status(413).json(e.message);
+  }
 });
 
 router.put("/libro/devolver/:id", (req, res) => {

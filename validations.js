@@ -124,12 +124,12 @@ async function validateCategoryHasBook(id) {
 }
 
 //PERSONA:
-//-faltan datos -> ya está HECHO
-//-error inesperado -> HECHO (contemplado en el catch)
-//-email registrado -> HECHO
-//-no se encuentra esa persona ->HECHO
-//-no existe esa persona -> HECHO
-//-esa persona tiene libros asociados, no se puede eliminar -> HECHO
+//-faltan datos -> ya está HECHO (PROBADO)
+//-error inesperado -> HECHO (contemplado en el catch) (PROBADO)
+//-email registrado -> HECHO (PROBADO)
+//-no se encuentra esa persona ->HECHO (PROBADO)
+//-no existe esa persona -> HECHO (PROBADO)
+//-esa persona tiene libros asociados, no se puede eliminar -> HECHO (PROBADO)
 
 //CATEGORIA
 //-faltan datos => HECHO
@@ -140,15 +140,17 @@ async function validateCategoryHasBook(id) {
 //-categoria con libros asociados, no se puede eliminar -> hecho
 
 //LIBRO
-//-error inesperado -> HECHO (contemplado en el catch)
+//-error inesperado -> HECHO (contemplado en el catch) (PROBADO)
 //-libro ya existente -> HECHO
 //-nombre y categoria datos obligatorios -> HECHO.
 //-no existe la categoria indicada -> HECHO
 //-no existe la persona indicada -> HECHO
-//-no se encuentra ese libro -> HECHO
+//-libro prestado, no se puede volver a prestar . FALTA
+//-no se encuentra la persona a la q se quiere prestar el libro. FALTA
+//-no se encuentra ese libro -> HECHO (PROBADO)
 //-ese libro no estaba prestado -> HECHO.
 //-no existe ese libro -> HECHO.
-//-ese libro esta prestado no se puede borrar -> REVISAR
+//-ese libro esta prestado no se puede borrar -> HECHO (PROBADO)
 //-solo se puede modificar la descripcion del libro // FALTA
 
 module.exports = {

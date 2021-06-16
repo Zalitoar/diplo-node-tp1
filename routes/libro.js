@@ -22,7 +22,6 @@ router.get("/libro", (req, res) => {
   });
 });
 
-// unificar estos dos GET
 router.get("/libro/:id", async (req, res) => {
   console.log(req.params.id);
   try {
@@ -34,24 +33,9 @@ router.get("/libro/:id", async (req, res) => {
 });
 
 router.post("/libro", async (req, res) => {
-
-  /*let id = req.body.id,
-    nombre = req.body.nombre,
-    categoria = req.body.categoria_id;
-  if (!id || id.trim() == "") {
-    res.send("Falta definir el id del libro.");
-  }
-  if (!nombre || nombre.trim() == "") {
-    res.send("Falta definir el nombre del libro.");
-  }
-  if (!categoria || categoria.trim() == "") {
-    res.send("Falta definir la categoria del libro.");
-  }*/
-
   try {
     await bookValidation(req.body.nombre, req.body.categoria_id, req.body.descripcion, req.body.persona_id);
     await validateBookExist(req.body.nombre);
-    //await validateCategoryExist(req.body.categoria_id); //CATEGORIA SE PUEDE REPETIR
     await validatePersonExist(req.body.persona_id);
     db.query(
       "INSERT INTO libro (nombre,descripcion,categoria_id,persona_id) values (?,?,?,?)",

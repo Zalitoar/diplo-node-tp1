@@ -131,9 +131,6 @@ async function validateCategoryHasBook(id) {
 //-no existe esa persona -> HECHO (PROBADO)
 //-esa persona tiene libros asociados, no se puede eliminar -> HECHO (PROBADO)
 
-
-
-
 //CATEGORIA
 //-faltan datos => HECHO (PROBADO)
 //-categoria ya existente  -> HECHO (PROBADO)

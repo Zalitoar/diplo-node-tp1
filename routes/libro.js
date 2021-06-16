@@ -7,12 +7,10 @@ const {
   validateBookLend,
   validateBookLendDelete,
   validatePersonExist,
-  validateCategoryExist,
-  validatePersonHasBook,
+  validatePersonFound,
   bookValidation,
 } = require("../validations");
 const db = require("../database");
-
 
 router.get("/libro", (req, res) => {
   db.query("SELECT * FROM libro", (err, rows) => {
@@ -34,7 +32,12 @@ router.get("/libro/:id", async (req, res) => {
 
 router.post("/libro", async (req, res) => {
   try {
-    await bookValidation(req.body.nombre, req.body.categoria_id, req.body.descripcion, req.body.persona_id);
+    await bookValidation(
+      req.body.nombre,
+      req.body.categoria_id,
+      req.body.descripcion,
+      req.body.persona_id
+    );
     await validateBookExist(req.body.nombre);
     await validatePersonExist(req.body.persona_id);
     db.query(
@@ -84,21 +87,20 @@ router.put("/libro/:id", async (req, res) => {
   }
 });
 
-router.put("/libro/prestar/:id", (req, res) => {
+router.put("/libro/prestar/:id", async (req, res) => {
   // AGREGAR VALIDACIONES:
-  // el libro ya se encuentra prestado
-  // no se puede prestar hasta que no se devuelva"
   // "no se encontro el libro"
+  // el libro ya se encuentra prestado no se puede prestar hasta que no se devuelva"
   // "no se encontro la persona a la que se quiere prestar el libro"
 
   try {
+    await validateBookFound(req.params.id);
+    await validateBookLend(req.params.id);
+    await validatePersonFound(req.body.persona_id);
     db.query(
       "UPDATE libro SET persona_id = ? WHERE id = ?",
-      [
-        req.body.persona_id,
-        req.params.id,
-      ],
-      (error, registro, campos) => {
+      [req.body.persona_id, req.params.id],
+      async (error, registro, campos) => {
         if (error) {
           throw error("error al ingresar en la base de datos");
         }

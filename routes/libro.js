@@ -88,15 +88,10 @@ router.put("/libro/:id", async (req, res) => {
 });
 
 router.put("/libro/prestar/:id", async (req, res) => {
-  // AGREGAR VALIDACIONES:
-  // "no se encontro el libro"
-  // el libro ya se encuentra prestado no se puede prestar hasta que no se devuelva"
-  // "no se encontro la persona a la que se quiere prestar el libro"
-
   try {
     await validateBookFound(req.params.id);
-    await validateBookLend(req.params.id);
     await validatePersonFound(req.body.persona_id);
+    await validateBookLend(req.params.id);
     db.query(
       "UPDATE libro SET persona_id = ? WHERE id = ?",
       [req.body.persona_id, req.params.id],

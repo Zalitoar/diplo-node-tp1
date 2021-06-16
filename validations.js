@@ -63,11 +63,13 @@ async function validateBookExist(id) {
 
 async function validateBookLend(id) {
   const book = await query(
-    "SELECT * FROM libro WHERE persona_id is NULL AND id=?",
+    "SELECT * FROM libro WHERE persona_id IS NOT NULL AND id=?",
     [id]
   );
   if (book.length) {
-    throw new Error("ese libro no esta prestado");
+    throw new Error(
+      "El libro ya se encuentra prestado no se puede prestar hasta que se devuelva."
+    );
   }
   return book[0];
 }

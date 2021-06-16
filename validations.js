@@ -74,6 +74,17 @@ async function validateBookLend(id) {
   return book[0];
 }
 
+async function validateBookIsNotLend(id) {
+  const book = await query(
+    "SELECT * FROM libro WHERE persona_id IS NULL AND id=?",
+    [id]
+  );
+  if (book.length) {
+    throw new Error("Ese libro no estaba prestado!");
+  }
+  return book[0];
+}
+
 async function validateBookLendDelete(id) {
   const book = await query(
     "SELECT * FROM libro WHERE persona_id is NOT NULL AND id=?",
@@ -125,42 +136,13 @@ async function validateCategoryHasBook(id) {
   return category[0];
 }
 
-//PERSONA:
-//-faltan datos -> ya está HECHO (PROBADO)
-//-error inesperado -> HECHO (contemplado en el catch) (PROBADO)
-//-email registrado -> HECHO (PROBADO)
-//-no se encuentra esa persona ->HECHO (PROBADO)
-//-no existe esa persona -> HECHO (PROBADO)
-//-esa persona tiene libros asociados, no se puede eliminar -> HECHO (PROBADO)
-
-//CATEGORIA
-//-faltan datos => HECHO (PROBADO)
-//-categoria ya existente  -> HECHO (PROBADO)
-//-error inesperado -> hecho (PROBADO)
-//-categoria no encontrada -> hecho (PROBADO)
-//-no existe la categoria -> hecho (PROBADO)
-//-categoria con libros asociados, no se puede eliminar -> hecho (PROBADO)
-
-//LIBRO
-//-error inesperado -> HECHO (contemplado en el catch) (PROBADO)
-//-libro ya existente -> HECHO (PROBADO)
-//-nombre y categoria datos obligatorios -> HECHO.
-//-no existe la categoria indicada -> HECHO
-//-no existe la persona indicada -> HECHO
-//-libro prestado, no se puede volver a prestar . FALTA
-//-no se encuentra la persona a la q se quiere prestar el libro. FALTA
-//-no se encuentra ese libro -> HECHO (PROBADO)
-//-ese libro no estaba prestado -> HECHO.
-//-no existe ese libro -> HECHO.
-//-ese libro esta prestado no se puede borrar -> HECHO (PROBADO)
-//-solo se puede modificar la descripcion del libro // FALTA
-
 module.exports = {
   personValidation,
   validatePersonExist,
   validatePersonFound,
   validatePersonHasBook,
   bookValidation,
+  validateBookIsNotLend,
   validateBookFound,
   validateBookExist,
   validateBookLend,

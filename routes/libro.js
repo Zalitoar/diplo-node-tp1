@@ -9,6 +9,7 @@ const {
   validatePersonExist,
   validateCategoryExist,
   validatePersonHasBook,
+  bookValidation,
 } = require("../validations");
 const db = require("../database");
 
@@ -33,7 +34,8 @@ router.get("/libro/:id", async (req, res) => {
 });
 
 router.post("/libro", async (req, res) => {
-  let id = req.body.id,
+
+  /*let id = req.body.id,
     nombre = req.body.nombre,
     categoria = req.body.categoria_id;
   if (!id || id.trim() == "") {
@@ -44,12 +46,13 @@ router.post("/libro", async (req, res) => {
   }
   if (!categoria || categoria.trim() == "") {
     res.send("Falta definir la categoria del libro.");
-  }
-  try {
-    await validateBookExist(req.body.id);
-    await validateCategoryExist(req.body.categoria_id);
-    await validatePersonExist(req.body.persona_id);
+  }*/
 
+  try {
+    await bookValidation(req.body.nombre, req.body.categoria_id, req.body.descripcion, req.body.persona_id);
+    await validateBookExist(req.body.nombre);
+    //await validateCategoryExist(req.body.categoria_id); //CATEGORIA SE PUEDE REPETIR
+    await validatePersonExist(req.body.persona_id);
     db.query(
       "INSERT INTO libro (nombre,descripcion,categoria_id,persona_id) values (?,?,?,?)",
       [
@@ -63,7 +66,7 @@ router.post("/libro", async (req, res) => {
           throw error("error al ingresar en la base de datos");
         }
         if (registro) {
-          res.status(200).json("libro registrada");
+          res.status(200).json("libro registrado");
         }
       }
     );

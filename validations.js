@@ -39,8 +39,8 @@ async function validatePersonHasBook(id) {
 }
 
 //---------------------------------------------------------------------
-async function bookValidation(nombre, descripcion, categoria) {
-  if (!nombre || !categoria) {
+async function bookValidation(nombre, descripcion, categoria_id, persona_id) {
+  if (!nombre || !categoria_id || !descripcion || !persona_id) {
     throw new Error("faltan datos");
   }
 }
@@ -54,7 +54,7 @@ async function validateBookFound(id) {
 }
 
 async function validateBookExist(id) {
-  const book = await query("SELECT * FROM libro WHERE id=?", [id]);
+  const book = await query("SELECT * FROM libro WHERE nombre=?", [id]);
   if (book.length) {
     throw new Error("Ya existe ese libro");
   }
